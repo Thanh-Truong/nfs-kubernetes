@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: nfs-server
+  name: nfs-server-airflow-dags
 spec:
   replicas: 1
   selector:
     matchLabels:
-      role: nfs-server
+      role: nfs-server-airflow-dags
   template:
     metadata:
       labels:
-        role: nfs-server
+        role: nfs-server-airflow-dags
     spec:
       containers:
-      - name: nfs-server
+      - name: nfs-server-airflow-dags
         image: gcr.io/google_containers/volume-nfs:0.8
         ports:
           - name: nfs
@@ -26,9 +26,44 @@ spec:
           privileged: true
         volumeMounts:
           - mountPath: /exports
-            name: mypvc
+            name: dags-disk
       volumes:
-        - name: mypvc
+        - name: dags-disk
           gcePersistentDisk:
-            pdName: airflow-data-disk
+            pdName: airflow-dags-disk
+            fsType: ext4
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nfs-server-airflow-logs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: nfs-server-airflow-logs
+  template:
+    metadata:
+      labels:
+        role: nfs-server-airflow-logs
+    spec:
+      containers:
+      - name: nfs-server-airflow-logs
+        image: gcr.io/google_containers/volume-nfs:0.8
+        ports:
+          - name: nfs
+            containerPort: 2049
+          - name: mountd
+            containerPort: 20048
+          - name: rpcbind
+            containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /exports
+            name: logs-disk
+      volumes:
+        - name: logs-disk
+          gcePersistentDisk:
+            pdName: airflow-logs-disk
             fsType: ext4

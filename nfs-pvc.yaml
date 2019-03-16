@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: nfs-service.default.svc.cluster.local
+    server: nfs-service-airflow-dags.default.svc.cluster.local
     path: "/"
 ---
 kind: PersistentVolumeClaim
@@ -23,14 +23,27 @@ spec:
     requests:
       storage: 10Gi
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pvc-airflow-logs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: nfs-service-airflow-logs.default.svc.cluster.local
+    path: "/"
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: pvc-airflow-logs
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: "standard"
+    - ReadWriteMany
+  storageClassName: ""
   resources:
     requests:
       storage: 10Gi

@@ -10,7 +10,9 @@ Airflow (link) has support for KubernetesExecutor that allows running a task on 
 - Creating a Persistent Disk in GCE
 
 ```
-gcloud compute disks create --size=500GB --zone=europe-west1-b airflow-data-disk
+gcloud compute disks create --size=500GB --zone=europe-west1-b airflow-logs-disk
+gcloud compute disks create --size=500GB --zone=europe-west1-b airflow-dags-disk
+
 ```
 
 - Creating NFS Server
@@ -30,3 +32,6 @@ kubectl apply -f nfs-server.yaml
 ```
  kubectl apply -f nfs-pvc.yaml
 ```
+
+## References:
+- https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
