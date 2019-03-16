@@ -12,7 +12,21 @@ Airflow (link) has support for KubernetesExecutor that allows running a task on 
 ```
 gcloud compute disks create --size=500GB --zone=europe-west1-b airflow-data-disk
 ```
+
 - Creating NFS Server
 ```
+kubectl apply -f nfs-server.yaml
+```
+After NSF Server deployment is up and running, its only container `nfs-server`
+is accessible via the following service.
 
+- Creating NFS Service to allow acessing to mounted volumn
+
+```
+kubectl apply -f nfs-server.yaml
+```
+
+- Creating NFS Persisent Volumn Claim, which maps to NFS Service
+```
+ kubectl apply -f nfs-pvc.yaml
 ```
