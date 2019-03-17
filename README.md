@@ -34,4 +34,5 @@ kubectl apply -f nfs-server.yaml
 ```
 
 ## References:
+- https://medium.com/platformer-blog/nfs-persistent-volumes-with-kubernetes-a-case-study-ce1ed6e2c266
 - https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
