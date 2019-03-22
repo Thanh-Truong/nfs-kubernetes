@@ -2,7 +2,7 @@
 Notes about setting up a Network File System in K8s
 
 ## Background story
-[Airflow] (https://github.com/apache/airflow) has support for KubernetesExecutor that allows running a task on a separate pod. Newly spawned pods need to read / write to a common shared volumn: reading DAGs and writing logs. This is solved by having a NFS, a shared volume between pods.
+[Airflow](https://github.com/apache/airflow) has support for KubernetesExecutor that allows running tasks on separate pods. Newly spawned pods need to read / write to a common shared volumn: reading DAGs and writing logs. This is solved by having a NFS, a shared volume between pods.
 
 ## Architecture
 
